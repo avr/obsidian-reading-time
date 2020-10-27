@@ -1,0 +1,7 @@
+{
+  "id": "obsidian-reading-time",
+  "name": "Reading Time",
+  "description": "This is a simple plugin for Obsidian (https://obsidian.md)",
+  "isDesktopOnly": false,
+  "js": "main.js"
+}
