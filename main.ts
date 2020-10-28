@@ -1,4 +1,4 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from "obsidian"
+import { Plugin, PluginSettingTab, Setting } from "obsidian"
 
 import ReadTime from "reading-time"
 
@@ -6,7 +6,7 @@ export default class ReadingTime extends Plugin {
   settings: ReadingTimeSettings
   statusBar: HTMLElement
 
-  onInit() {}
+  onInit() { }
 
   async onload() {
     console.log("loading plugin")
@@ -52,11 +52,11 @@ class ReadingTimeSettingsTab extends PluginSettingTab {
 
     containerEl.empty()
 
-    containerEl.createEl("h2", { text: "Settings for Reading Time." })
+    containerEl.createEl("h2", { text: "Settings for Reading Time" })
 
     new Setting(containerEl)
       .setName("Reading speed")
-      .setDesc("Words per minute used for reading speed.")
+      .setDesc("Words per minute used for reading speed (default: 200).")
       .addText((text) =>
         text
           .setPlaceholder("Example: 200")
