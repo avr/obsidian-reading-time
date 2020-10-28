@@ -1,8 +1,8 @@
 {
   "name": "obsidian-reading-time",
   "author": "Aaron Van Ruler <aaron@avr.io>",
-  "version": "0.0.1",
-  "description": "Add the current file's reading time to Obsidian's status bar.",
+  "version": "0.0.2",
+  "description": "Add the current note's reading time to Obsidian's status bar.",
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
