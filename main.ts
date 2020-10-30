@@ -6,13 +6,14 @@ export default class ReadingTime extends Plugin {
   settings: ReadingTimeSettings
   statusBar: HTMLElement
 
-  onInit() { }
+  onInit() {}
 
   async onload() {
     console.log("loading plugin")
 
     this.settings = (await this.loadData()) || new ReadingTimeSettings()
     this.statusBar = this.addStatusBarItem()
+    this.statusBar.setText("")
 
     this.addSettingTab(new ReadingTimeSettingsTab(this.app, this))
     this.app.workspace.on("file-open", this.calculateReadingTime)
@@ -30,13 +31,15 @@ export default class ReadingTime extends Plugin {
   }
 
   calculateReadingTime = (e: any) => {
-    let leaf: any = this.app.workspace.activeLeaf
+    let view: any = this.app.workspace.activeLeaf.view
 
-    if (leaf != null) {
-      let stats = ReadTime(leaf.view.data, {
+    if (view && view.data) {
+      let stats = ReadTime(view.data, {
         wordsPerMinute: this.settings.readingSpeed,
       })
       this.statusBar.setText(`${stats.text}`)
+    } else {
+      this.statusBar.setText("")
     }
   }
 }
@@ -51,8 +54,6 @@ class ReadingTimeSettingsTab extends PluginSettingTab {
     const plugin: any = (this as any).plugin
 
     containerEl.empty()
-
-    containerEl.createEl("h2", { text: "Settings for Reading Time" })
 
     new Setting(containerEl)
       .setName("Reading speed")
