@@ -6,24 +6,17 @@ export default class ReadingTime extends Plugin {
   settings: ReadingTimeSettings
   statusBar: HTMLElement
 
-  onInit() {}
-
   async onload() {
-    console.log("loading plugin")
-
     this.settings = (await this.loadData()) || new ReadingTimeSettings()
     this.statusBar = this.addStatusBarItem()
     this.statusBar.setText("")
 
     this.addSettingTab(new ReadingTimeSettingsTab(this.app, this))
-    this.app.workspace.on("file-open", this.calculateReadingTime)
-    this.app.on("codemirror", this.codeMirror)
-  }
 
-  onunload() {
-    console.log("unloading plugin")
-    this.app.workspace.off("file-open", this.calculateReadingTime)
-    this.app.off("codemirror", this.codeMirror)
+    this.registerEvent(
+      this.app.workspace.on("file-open", this.calculateReadingTime)
+    )
+    this.registerEvent(this.app.on("codemirror", this.codeMirror))
   }
 
   codeMirror = (cm: any) => {
