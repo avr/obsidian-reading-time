@@ -24,15 +24,20 @@ export default class ReadingTime extends Plugin {
   }
 
   calculateReadingTime = (e: any) => {
-    let view: any = this.app.workspace.activeLeaf.view
+    let activeLeaf: any = this.app.workspace.activeLeaf ?? null
+    let view: any = activeLeaf.view ?? null
 
-    if (view && view.data) {
-      let stats = ReadTime(view.data, {
-        wordsPerMinute: this.settings.readingSpeed,
-      })
-      this.statusBar.setText(`${stats.text}`)
-    } else {
-      this.statusBar.setText("")
+    try {
+      if (view && view.data) {
+        let stats = ReadTime(view.data, {
+          wordsPerMinute: this.settings.readingSpeed,
+        })
+        this.statusBar.setText(`${stats.text}`)
+      } else {
+        this.statusBar.setText("")
+      }
+    } catch (e) {
+      console.log(e.message)
     }
   }
 }
