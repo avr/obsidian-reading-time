@@ -2,8 +2,8 @@
 
 Simple plugin to add an estimated reading time for the selected note to the StatusBar.
 
-![Screenshot](./example.png)
-![Screenshot](./settings.png)
+![Screenshot](https://raw.githubusercontent.com/avr/obsidian-reading-time/main/example.png)
+![Screenshot](https://raw.githubusercontent.com/avr/obsidian-reading-time/main/settings.png)
 
 ## Compatibility
 **Note:** The Obsidian API is still in early alpha and is subject to change at any time!
