@@ -1,6 +1,6 @@
 import { App, MarkdownView, Plugin, debounce, Editor, Modal } from "obsidian"
 import { ReadingTimeSettingsTab, ReadingTimeSettings, RT_DEFAULT_SETTINGS } from "./settings"
-import readingTime from "./helpers"
+import { readingTimeText } from "./helpers"
 export default class ReadingTime extends Plugin {
   settings: ReadingTimeSettings
   statusBar: HTMLElement
@@ -34,7 +34,7 @@ export default class ReadingTime extends Plugin {
   calculateReadingTime = () => {
     const mdView = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (mdView && mdView.getViewData()) {
-      const result = readingTime(mdView.getViewData(), this)
+      const result = readingTimeText(mdView.getViewData(), this)
       this.statusBar.setText(`${result}`)
     } else {
       this.statusBar.setText("0 min read")

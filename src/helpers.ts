@@ -1,8 +1,8 @@
-import ReadTime from "reading-time"
+const ReadTime = require('reading-time/lib/reading-time')
 import PrettyMilliseconds from "pretty-ms"
 import ReadingTime from "./main";
 
-export default function readingTime(text: string, plugin: ReadingTime) {
+export function readingTimeText(text: string, plugin: ReadingTime) {
     const result = ReadTime(text, {
       wordsPerMinute: plugin.settings.readingSpeed,
     })
