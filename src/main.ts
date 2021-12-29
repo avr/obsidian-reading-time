@@ -1,11 +1,16 @@
 import { App, MarkdownView, Plugin, PluginSettingTab, Setting, debounce, Editor, Modal } from "obsidian"
 import ReadTime from "reading-time"
+import PrettyMilliseconds from "pretty-ms"
 interface ReadingTimeSettings {
 	readingSpeed: number;
+  format: string;
+  appendText: string;
 }
 
 const DEFAULT_SETTINGS: ReadingTimeSettings = {
-  readingSpeed: 200
+  readingSpeed: 200,
+  format: 'default',
+  appendText: 'read'
 }
 export default class ReadingTime extends Plugin {
   settings: ReadingTimeSettings
@@ -39,19 +44,42 @@ export default class ReadingTime extends Plugin {
 
   calculateReadingTime = () => {
     const mdView = this.app.workspace.getActiveViewOfType(MarkdownView);
-
     if (mdView && mdView.getViewData()) {
-      const stats = this.readingTime(mdView.getViewData())
-      this.statusBar.setText(`${stats.text}`)
+      const result = this.readingTime(mdView.getViewData())
+      this.statusBar.setText(`${result}`)
     } else {
       this.statusBar.setText("0 min read")
     }
   }
 
   readingTime(text: string) {
-    return ReadTime(text, {
+    const result = ReadTime(text, {
       wordsPerMinute: this.settings.readingSpeed,
     })
+    let options:any = {
+      secondsDecimalDigits: 0
+    }
+    switch (this.settings.format) {
+      case 'simple':
+        break;
+      case 'compact':
+        if (result.time > 3600000) {
+          options.unitCount = 2;
+        } else {
+          options.compact = true
+        }
+        break;
+      case 'verbose':
+        options.verbose = true;
+        break;
+      case 'digital':
+        options.colonNotation = true;
+        break;
+      case 'default':
+        return this.settings.appendText ? result.text : result.text.replace(' read', '');
+    }
+    let output = PrettyMilliseconds(result.time, options)
+    return this.settings.appendText ? `${output} ${this.settings.appendText}` : output;
   }
 
 	async loadSettings() {
@@ -78,7 +106,7 @@ class ReadingTimeModal extends Modal {
 		const {contentEl, titleEl} = this;
     const stats = this.plugin.readingTime(this.editor.getSelection())
     titleEl.setText('Reading Time of Selected Text')
-		contentEl.setText(`${stats.text} (at ${this.plugin.settings.readingSpeed} wpm)`);
+		contentEl.setText(`${stats} (at ${this.plugin.settings.readingSpeed} wpm)`);
 	}
 
 	onClose() {
@@ -104,14 +132,43 @@ class ReadingTimeSettingsTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("Reading speed")
       .setDesc("Words per minute used for reading speed (default: 200).")
-      .addText(text => text
-          .setPlaceholder("Example: 200")
+      .addText((text) => {
+        text.setPlaceholder("Example: 200")
           .setValue(this.plugin.settings.readingSpeed.toString())
           .onChange(async (value) => {
             this.plugin.settings.readingSpeed = parseInt(value.trim())
             await this.plugin.saveSettings()
-            this.plugin.calculateReadingTime
+              .then( this.plugin.calculateReadingTime )
           })
-      )
+      });
+
+    new Setting(this.containerEl)
+      .setName("Format")
+      .setDesc("Choose the output format")
+      .addDropdown(dropdown => dropdown
+        .addOption("default", "Default (10 min)")
+        .addOption("compact", "Compact (10m)")
+        .addOption("simple", "Simple (10m 4s)")
+        .addOption("verbose", "Verbose (10 minutes 4 seconds)")
+        .addOption("digital", "Colon Notation (10:04)")
+        .setValue(this.plugin.settings.format)
+        .onChange(async (value) => {
+          this.plugin.settings.format = value;
+          await this.plugin.saveSettings()
+            .then( this.plugin.calculateReadingTime )
+        })
+      );
+
+    new Setting(this.containerEl)
+      .setName("Append Text")
+      .setDesc("Append 'read' to formatted string.")
+      .addText(text => text
+        .setValue(this.plugin.settings.appendText)
+        .onChange(async (value) => {
+          this.plugin.settings.appendText = value.trim();
+          await this.plugin.saveSettings()
+            .then( this.plugin.calculateReadingTime )
+        })
+      );
   }
 }

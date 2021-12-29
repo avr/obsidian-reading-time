@@ -5,24 +5,25 @@
   "description": "Add the current note's reading time to Obsidian's status bar.",
   "main": "main.js",
   "scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "node esbuild.config.mjs production"
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production"
   },
   "keywords": [
     "obsidian-md"
   ],
   "license": "MIT",
   "devDependencies": {
-		"@types/node": "^17.0.5",
-		"@typescript-eslint/eslint-plugin": "^5.2.0",
-		"@typescript-eslint/parser": "^5.2.0",
-		"builtin-modules": "^3.2.0",
-		"esbuild": "0.13.12",
-		"obsidian": "^0.12.17",
+    "@types/node": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "builtin-modules": "^3.2.0",
+    "esbuild": "0.13.12",
+    "obsidian": "^0.12.17",
     "tslib": "^2.3.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "pretty-ms": "^7.0.1",
     "reading-time": "^1.5.0"
   }
 }
