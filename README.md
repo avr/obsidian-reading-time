@@ -24,11 +24,7 @@ cp main.js manifest.json /path/to/your/vault/.obsidian/plugins/obsidian-reading-
 
 - After all changes for the release are merged create a new branch for the release
 - Update the changelog with new features and fixes
-- Bump the plugin version in the following files:
-  - `manifest.json`
-  - `package.json`
-  - `versions.json`
-- Run `npm install` to update the `package-lock.json`
+- Run the `version-bump.mjs` script with the new version as an argument
 - Commit all changed files and create a pull request
 - After the pull request is merged, create a new annotated tag for the release:
 
