@@ -1,31 +1,31 @@
 {
-  "name": "obsidian-reading-time",
-  "author": "Aaron Van Ruler <aaron@avr.io>",
-  "version": "1.1.1",
-  "description": "Add the current note's reading time to Obsidian's status bar.",
-  "main": "main.js",
-  "scripts": {
-    "dev": "node esbuild.config.mjs",
-    "build": "node esbuild.config.mjs production",
-    "lint": "eslint src/"
-  },
-  "keywords": [
-    "obsidian-md"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@eslint/js": "^9.1.1",
-    "@types/node": "^20.11.19",
-    "builtin-modules": "^3.3.0",
-    "esbuild": "0.20.0",
-    "eslint": "^8.57.0",
-    "obsidian": "latest",
-    "tslib": "^2.6.2",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^7.7.0"
-  },
-  "dependencies": {
-    "pretty-ms": "^7.0.1",
-    "reading-time": "^1.5.0"
-  }
+	"name": "obsidian-reading-time",
+	"author": "Aaron Van Ruler <aaron@avr.io>",
+	"version": "1.1.2",
+	"description": "Add the current note's reading time to Obsidian's status bar.",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "node esbuild.config.mjs production",
+		"lint": "eslint src/"
+	},
+	"keywords": [
+		"obsidian-md"
+	],
+	"license": "MIT",
+	"devDependencies": {
+		"@eslint/js": "^9.1.1",
+		"@types/node": "^20.11.19",
+		"builtin-modules": "^3.3.0",
+		"esbuild": "0.20.0",
+		"eslint": "^8.57.0",
+		"obsidian": "latest",
+		"tslib": "^2.6.2",
+		"typescript": "^5.4.5",
+		"typescript-eslint": "^7.7.0"
+	},
+	"dependencies": {
+		"pretty-ms": "^7.0.1",
+		"reading-time": "^1.5.0"
+	}
 }
