@@ -57,7 +57,7 @@ export default class ReadingTime extends Plugin {
       {},
       RT_DEFAULT_SETTINGS,
       await this.loadData()
-    );
+    ) as ReadingTimeSettings;
   }
 
   async saveSettings() {
