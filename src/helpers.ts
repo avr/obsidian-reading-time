@@ -6,7 +6,7 @@ export function readingTimeText(text: string, plugin: ReadingTime) {
   const result = ReadTime(text, {
     wordsPerMinute: plugin.settings.readingSpeed,
   });
-  const options: any = {
+  let options: PrettyMilliseconds.Options = {
     secondsDecimalDigits: 0,
   };
   switch (plugin.settings.format) {
@@ -14,16 +14,16 @@ export function readingTimeText(text: string, plugin: ReadingTime) {
       break;
     case "compact":
       if (result.time > 3600000) {
-        options.unitCount = 2;
+        options = { ...options, unitCount: 2 };
       } else {
-        options.compact = true;
+        options = { ...options, compact: true };
       }
       break;
     case "verbose":
-      options.verbose = true;
+      options = { ...options, verbose: true };
       break;
     case "digital":
-      options.colonNotation = true;
+      options = { ...options, colonNotation: true };
       break;
     case "default":
       return plugin.settings.appendText
