@@ -26,5 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin no longer crashes on mobile
 - Read time updates more reliably on file change
 
-[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.1.1...HEAD
-[1.1.2]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.1.1...v1.1.2
+[unreleased]: https://github.com/avr/obsidian-reading-time/compare/v1.1.1...HEAD
+[1.1.2]: https://github.com/avr/obsidian-reading-time/compare/v1.1.1...v1.1.2
