@@ -1,4 +1,4 @@
-import ReadTime from "reading-time";
+import ReadTime from "./lib/reading-time";
 import PrettyMilliseconds from "pretty-ms";
 import ReadingTime from "./main";
 
@@ -27,8 +27,8 @@ export function readingTimeText(text: string, plugin: ReadingTime) {
       break;
     case "default":
       return plugin.settings.appendText
-        ? result.text
-        : result.text.replace(" read", "");
+        ? `${result.minutes} min read`
+        : `${result.minutes} min`;
   }
   const output = PrettyMilliseconds(result.time, options);
   return plugin.settings.appendText
