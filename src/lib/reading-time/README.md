@@ -1,0 +1,1 @@
+This code is pulled from [reading-time](https://github.com/ngryman/reading-time), which has not been updated since September 2021. The published version assumes a NodeJS environment, which is not the case on Obsidian mobile. Therefore, we maintain our own version of the library here.
