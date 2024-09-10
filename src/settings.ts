@@ -1,15 +1,23 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import ReadingTime from "./main";
 
+export enum ReadingTimeFormat {
+  Default = "default",
+  Compact = "compact",
+  Simple = "simple",
+  Verbose = "verbose",
+  Digital = "digital",
+}
+
 export interface ReadingTimeSettings {
   readingSpeed: number;
-  format: string;
+  format: ReadingTimeFormat;
   appendText: string;
 }
 
 export const RT_DEFAULT_SETTINGS: ReadingTimeSettings = {
   readingSpeed: 200,
-  format: "default",
+  format: ReadingTimeFormat.Default,
   appendText: "read",
 };
 
@@ -46,14 +54,17 @@ export class ReadingTimeSettingsTab extends PluginSettingTab {
       .setDesc("Choose the output format")
       .addDropdown((dropdown) =>
         dropdown
-          .addOption("default", "Default (10 min)")
-          .addOption("compact", "Compact (10m)")
-          .addOption("simple", "Simple (10m 4s)")
-          .addOption("verbose", "Verbose (10 minutes 4 seconds)")
-          .addOption("digital", "Colon Notation (10:04)")
+          .addOption(ReadingTimeFormat.Default, "Default (10 min)")
+          .addOption(ReadingTimeFormat.Compact, "Compact (10m)")
+          .addOption(ReadingTimeFormat.Simple, "Simple (10m 4s)")
+          .addOption(
+            ReadingTimeFormat.Verbose,
+            "Verbose (10 minutes 4 seconds)"
+          )
+          .addOption(ReadingTimeFormat.Digital, "Colon Notation (10:04)")
           .setValue(this.plugin.settings.format)
           .onChange(async (value) => {
-            this.plugin.settings.format = value;
+            this.plugin.settings.format = value as ReadingTimeFormat;
             await this.plugin
               .saveSettings()
               .then(this.plugin.calculateReadingTime);

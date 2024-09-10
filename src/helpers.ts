@@ -1,31 +1,32 @@
 import ReadTime from "./lib/reading-time";
 import PrettyMilliseconds from "pretty-ms";
 import ReadingTime from "./main";
+import { ReadingTimeFormat } from "./settings";
 
 export function readingTimeText(text: string, plugin: ReadingTime) {
   const result = ReadTime(text, {
     wordsPerMinute: plugin.settings.readingSpeed,
   });
-  let options: PrettyMilliseconds.Options = {
-    secondsDecimalDigits: 0,
-  };
+  let options: PrettyMilliseconds.Options = { secondsDecimalDigits: 0 };
+
   switch (plugin.settings.format) {
-    case "simple":
+    case ReadingTimeFormat.Simple:
       break;
-    case "compact":
+    case ReadingTimeFormat.Compact:
       if (result.time > 3600000) {
         options = { ...options, unitCount: 2 };
       } else {
         options = { ...options, compact: true };
       }
       break;
-    case "verbose":
+    case ReadingTimeFormat.Verbose:
       options = { ...options, verbose: true };
       break;
-    case "digital":
+    case ReadingTimeFormat.Digital:
       options = { ...options, colonNotation: true };
       break;
-    case "default":
+    case ReadingTimeFormat.Default:
+    default:
       return plugin.settings.appendText
         ? `${result.minutes} min read`
         : `${result.minutes} min`;
