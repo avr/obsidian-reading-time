@@ -17,7 +17,7 @@
 		"@eslint/js": "^9.1.1",
 		"@types/node": "^20.11.19",
 		"builtin-modules": "^3.3.0",
-		"esbuild": "0.20.0",
+		"esbuild": "^0.28.1",
 		"eslint": "^8.57.0",
 		"obsidian": "latest",
 		"tslib": "^2.6.2",

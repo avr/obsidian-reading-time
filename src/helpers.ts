@@ -4,6 +4,12 @@ import ReadingTime from "./main";
 import { ReadingTimeFormat } from "./settings";
 
 export function readingTimeText(text: string, plugin: ReadingTime) {
+  if (plugin.settings.excludeComments) {
+    text = text.replace(/%%[\s\S]*?%%/g, "");
+  }
+  if (plugin.settings.excludeHtmlTags) {
+    text = text.replace(/<\/?[a-zA-Z][^<>]*>/g, "");
+  }
   const result = ReadTime(text, {
     wordsPerMinute: plugin.settings.readingSpeed,
   });

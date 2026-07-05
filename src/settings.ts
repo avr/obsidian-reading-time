@@ -13,12 +13,16 @@ export interface ReadingTimeSettings {
   readingSpeed: number;
   format: ReadingTimeFormat;
   appendText: string;
+  excludeComments: boolean;
+  excludeHtmlTags: boolean;
 }
 
 export const RT_DEFAULT_SETTINGS: ReadingTimeSettings = {
   readingSpeed: 200,
   format: ReadingTimeFormat.Default,
   appendText: "read",
+  excludeComments: false,
+  excludeHtmlTags: false,
 };
 
 export class ReadingTimeSettingsTab extends PluginSettingTab {
@@ -79,6 +83,36 @@ export class ReadingTimeSettingsTab extends PluginSettingTab {
           .setValue(this.plugin.settings.appendText)
           .onChange(async (value) => {
             this.plugin.settings.appendText = value.trim();
+            await this.plugin
+              .saveSettings()
+              .then(this.plugin.calculateReadingTime);
+          })
+      );
+
+    new Setting(this.containerEl)
+      .setName("Exclude comments")
+      .setDesc("Omit %%comments%% from the reading time calculation.")
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.excludeComments)
+          .onChange(async (value) => {
+            this.plugin.settings.excludeComments = value;
+            await this.plugin
+              .saveSettings()
+              .then(this.plugin.calculateReadingTime);
+          })
+      );
+
+    new Setting(this.containerEl)
+      .setName("Exclude HTML tags")
+      .setDesc(
+        "Omit HTML tag markup (e.g. <mark>, <br/>) from the calculation; text inside tags still counts."
+      )
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.excludeHtmlTags)
+          .onChange(async (value) => {
+            this.plugin.settings.excludeHtmlTags = value;
             await this.plugin
               .saveSettings()
               .then(this.plugin.calculateReadingTime);
